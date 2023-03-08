@@ -1,0 +1,79 @@
+Write a query to fetch the first_name from the Employee table in the upper case and use the ALIAS name as EmpName.
+
+Write a query to fetch the number of employees working in the department ‘HR’.
+
+Write a query to get the current date.
+
+Write a query to retrieve the first four characters of  EmpLname from the EmployeeInfo table.
+
+Write a query to fetch only the place name(string before brackets) from the Address column of EmployeeInfo table.
+
+Write a query to create a new table that consists of data and structure copied from the other table.
+
+Write q query to find all the employees whose salary is between 50000 to 100000.
+
+Write a query to find the names of employees that begin with ‘S’
+
+Write a query to fetch top N records.
+
+Write a query to retrieve the EmpFname and EmpLname in a single column as “FullName”. The first name and the last name must be separated with space.
+
+create table department(department_id INT NOT NULL AUTO_INCREMENT,
+    department_name VARCHAR(50) NOT NULL,
+    manager_id INT,
+    location VARCHAR(100),
+    PRIMARY KEY (department_id)
+);
+insert into department(department_id,department_name,manager_id,location)values(2000,"Developer",1,"chennai");
+insert into department(department_id,department_name,manager_id,location)values(2022,"Manager",2,"bangalore");
+insert into department(department_id,department_name,manager_id,location)values(1023,"HR",3,"hyderbad");
+insert into department(department_id,department_name,manager_id,location)values(1034,"Tester",4,"kolkata"); 
+CREATE TABLE Employee (
+    employee_id INT NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(20),
+    hire_date DATE NOT NULL,
+    job_title VARCHAR(50) NOT NULL,
+    department_id INT NOT NULL,
+    salary DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (employee_id),
+    FOREIGN KEY (department_id) REFERENCES Department(department_id)
+);
+insert into Employee(employee_id,first_name,last_name,email,phone,hire_date,job_title,department_id,salary)values(100,"Jenson","mathew","jensonmathew@gmail.com",9345261784,"2022-03-15","Developer",2000,25000.0);
+insert into Employee(employee_id,first_name,last_name,email,phone,hire_date,job_title,department_id,salary)values(200,"Anirudh","gopal","anirudhgopal@gmail.com",9546789543,"2022-03-14","Manager",2022,35000.0);
+insert into Employee(employee_id,first_name,last_name,email,phone,hire_date,job_title,department_id,salary)values(300,"Christo","shaji","christoshaji@gmail.com",9098701784,"2022-11-11","HR",1023,20000.0);
+insert into Employee(employee_id,first_name,last_name,email,phone,hire_date,job_title,department_id,salary)values(400,"Blesson","john","blessonjohn@gmail.com",9345211114,"2022-07-19","Tester",1034,45000.0);
+
+select upper(first_name) as ALIAS from Employee;
+
+select count(Employee.employee_id) from Employee inner join department on Employee.department_id=department.department_id where department_name="HR";
+
+select curdate();
+
+select substring(last_name,1,4) from Employee;
+
+alter table Employee add address varchar(255);
+
+update Employee set address="chennai (po123)" where employee_id=100;
+
+update Employee set address="Bangalore(po123)" where employee_id=200;
+
+update Employee set address="Hyderbad(po123)" where employee_id=300;
+
+update Employee set address="kolkata(po123)" where employee_id=400;
+
+SELECT SUBSTRING(address,1,locate('(',address)) from Employee;
+
+SELECT SUBSTRING(address,1,locate(' ',address)) from Employee;
+
+create table newemployee select * from Employee;
+
+select * from Employee where salary>50000 and salary<100000;
+
+select first_name from Employee where first_name like 's%';
+
+select * from Employee order by salary desc;
+
+select concat(first_name,' ',last_name) as FullName from Employee;

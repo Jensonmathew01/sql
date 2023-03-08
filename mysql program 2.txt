@@ -1,0 +1,13 @@
+select car_id,car_name,car_type from cars where car_id not in(select car_id from rentals) order by car_id;
+
+select car_id,car_name,owner_id from cars where car_type="Hatchback" or car_type="SUV" order by car_id;
+
+alter table cars add Car_Regno varchar(10);
+
+select car_id,car_name,car_type from cars where car_name="Maruthi" and car_type="SUV"order by car_id;
+
+select distinct owners.owner_id,owners.owner_name,owners.address,owners.phone_no from owners inner join cars on owners.owner_id=cars.owner_id where cars.car_name like 'Maruthi%';
+
+select rental_id,car_id,customer_id,km_driven from rentals where return_date="2019-08-12" order by rental_id;
+
+select car_id,count(car_id) as 'N0_OF_TRIPS' from rentals group by car_id order by car_id;
